@@ -51,7 +51,7 @@ public class JoinSign
   {
 	  Player p = e.getPlayer();
 	  if ((e.getAction() == Action.RIGHT_CLICK_BLOCK) && (e.getClickedBlock() != null) && (
-		      (e.getClickedBlock().getType() == Material.WALL_SIGN) || (e.getClickedBlock().getType() == Material.SIGN_POST)))
+		      (e.getClickedBlock().getType() == Material.OAK_SIGN) || (e.getClickedBlock().getType() == Material.OAK_WALL_SIGN)))
 		    {
 		      Sign s = (Sign)e.getClickedBlock().getState();
 		      String[] lines = s.getLines();
