@@ -1,0 +1,13 @@
+x1:
+  ability: 1v1
+  cooldown: 20
+  msg:
+    won: '&cYou won the 1v1!'
+    lose: '&cYou lose the 1v1!'
+    invite_cooldown: '&cWait To Challenge Again!'
+    invite_accept: '&cThe player $player$ accepted your request for 1v1!'
+    guest_accept: '&cYou accepted the request of $player$!'
+    invite: '&cYou challenged $player$ to 1v1!'
+    guest: '&cYou were challenged by $player$ to 1v1!'
+    disconect: '&cYour opponent disconnected'
+    no_cmd: '&cYou cannot use commands on 1V1!'
