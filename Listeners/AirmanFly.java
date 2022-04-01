@@ -43,7 +43,10 @@
 
 /* 45 */       Cooldown.add(p, 3);
 /* 46 */       Vector v2 = p.getLocation().getDirection().multiply(2.0D).setY(1.0D);
+/* 47 */       p.getWorld().playEffect(p.getLocation().add(0.0D, 0.0D, 0.0D), Effect.FIREWORK_SHOOT, 1);
+/* 48 */       p.getWorld().playEffect(p.getLocation().add(0.0D, 0.5D, 0.0D), Effect.FIREWORK_SHOOT, 1);
 /* 49 */       p.playSound(p.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.Airman-Fly")), 500.0F, 500.0F);
+/* 50 */       p.getWorld().playEffect(p.getLocation().add(0.0D, 1.5D, 0.0D), Effect.FIREWORK_SHOOT, 1);
 /* 51 */       p.setVelocity(v2);
 /* 52 */       org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable()
 /*    */       {
