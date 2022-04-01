@@ -48,7 +48,7 @@
 /*    */     }
 /* 49 */     if (Join.game.contains(paramPlayerPickupItemEvent.getPlayer().getName()) && (Main.getInstace().getConfig().getString("DisablePickupItemsOnKitPvP").equalsIgnoreCase("true")))
 /*    */     {
-/* 51 */       if ((paramPlayerPickupItemEvent.getItem().getItemStack().getType() == Material.MUSHROOM_SOUP))
+/* 51 */       if ((paramPlayerPickupItemEvent.getItem().getItemStack().getType() == Material.MUSHROOM_STEW))
 /*    */       {
 /* 53 */         paramPlayerPickupItemEvent.setCancelled(false);
 /*    */       } else {
