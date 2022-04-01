@@ -70,20 +70,19 @@ public class AntiDeathDrop
       if (Join.game.contains(p.getName()))
       {
         Join.game.contains(k.getName());
-        
-        e.getDrops().clear();
-        e.setDeathMessage("");
         double killstreak = XP.getXP(k.getName());
-		if (killstreak % 200 == 0) {
-			Streak.broadcast(String.valueOf(API.NomeServer + Main.messages.getString("LevelUP").replaceAll("%player%", k.getName()).replace("%level%", Level.getLevel(k)).replace("&", "§")) , k.getWorld());
+        if (killstreak % 200 == 0) {
+        	Streak.broadcast(String.valueOf(API.NomeServer + Main.messages.getString("LevelUP").replaceAll("%player%", k.getName()).replace("%level%", Level.getLevel(k)).replace("&", "§")) , k.getWorld());
 			for (Player p2 : Bukkit.getOnlinePlayers()) {
 				p2.playSound(p2.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.Respawn")), 4.0F, 4.0F);
 			}
 		}
+        e.getDrops().clear();
+        e.setDeathMessage("");
         p.sendMessage(String.valueOf(API.NomeServer + Main.getInstace().getConfig().getString("Death.Tell").replaceAll("%player%", k.getName())));
         k.sendMessage(String.valueOf(API.NomeServer + Main.getInstace().getConfig().getString("Kill.Tell").replaceAll("%player%", p.getName())));
-        k.playSound(k.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.Respawn")), 8.0F, 8.0F);
         p.sendMessage(String.valueOf(API.NomeServer + "§a-" + Main.customization.getInt("XPLost-OnDeath") + "XP"));
+        k.playSound(k.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.Respawn")), 8.0F, 8.0F);
         if (k.hasPermission("kitpvp.doublexp")) {
         XP.addXP(k.getName(), Main.customization.getDouble("XPEarned-OnKill") * 2);
         k.sendMessage(String.valueOf(API.NomeServer + "§a+" + Main.customization.getInt("XPEarned-OnKill") * 2 + "XP (2X)"));
