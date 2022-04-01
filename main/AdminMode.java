@@ -79,7 +79,7 @@
 /*     */         
 /*     */ 
 /*     */ 
-/*  83 */         ItemStack barra = new ItemStack(Material.IRON_FENCE);
+/*  83 */         ItemStack barra = new ItemStack(Material.IRON_BARS);
 /*  84 */         ItemMeta barrameta = barra.getItemMeta();
 /*  85 */         barrameta.setDisplayName("§a§lJail!");
 /*  86 */         barra.setItemMeta(barrameta);
@@ -224,7 +224,7 @@
 /*     */   @EventHandler
 /*     */   public void onAdminArena(PlayerInteractEntityEvent event) {
 /* 227 */     Player p = event.getPlayer();
-/* 228 */     if ((admin.contains(p.getName())) && (p.getItemInHand().getType() == Material.IRON_FENCE))
+/* 228 */     if ((admin.contains(p.getName())) && (p.getItemInHand().getType() == Material.IRON_BARS))
 /*     */     {
 /* 230 */       Player p1 = (Player)event.getRightClicked();
 /* 231 */       if (p1 != null)
