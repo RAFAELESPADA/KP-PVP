@@ -1,6 +1,7 @@
 #In this file you can edit plugin languague
 #Some messages arent here. they are in config.yml
 1v1Leave: '&eYou leave the 1v1.'
+SumoLeave: '&eYou leave the Sumo.'
 TimelordUse: '&aYou use your ability!'
 Timelordfrozen: '&cYou have been frozen by a timelord'
 TimelordUnfrozen: '&bYou have been unfrozen'
@@ -19,7 +20,7 @@ SpawnSeted: '&bYou seted the kitpvp spawn with sucess!'
 KitSlotBlocked: '&cSlot blocked! Buy more kits on the shop.'
 KitMenuClosed: '&2&lYou close the kit menu sucefully'
 ShopMenuClosed: '&2&lYou close the shop menu sucefully'
-LevelUP: '&a%player leveled up to level &e%level% &a!'
+LevelUP: '&a%player% leveled up to level &e%level% &a!'
 SpawnDeathSeted: '&bYou changed the kitpvp death spawn location with sucess!'
 PluginReloaded: '&eThe plugin config has been reloaded sucefully!'
 AlreadyonClickTest: '&cYou are already testing your clicks!'
@@ -87,15 +88,28 @@ ShopItemName: '&3Shop menu &7(Right click)'
 ClickTestItemName: '&6Click Test &7(Right click)'
 1v1InviteItemName: '&6Right click on a player to challenge him'
 1v1LeaveItemName: '&cLeave the 1V1'
+SumoInviteItemName: '&6Right click on a player to challenge him'
+SumoLeaveItemName: '&cLeave the Sumo'
 
 
 #Scoreboard customization
+
+
 ScoreBoardTitle: '&6&lKITPVP'
 
-ScoreBoardKit: '&eKit: '
-ScoreBoardKills: '&eKills: '
-ScoreBoardDeaths: '&eDeaths: '
-ScoreBoardKS: '&eKS: '
-ScoreBoardCoins: '&eCoins: '
-ScoreBoardXP: '&eXP: '
-ScoreBoardLevel: '&eLevel: '
+#Contents of the ScoreBoard
+ScoreBoardKit: '&eKit: &f'
+ScoreBoardKills: '&eKills: &f'
+ScoreBoardDeaths: '&eDeaths: &f'
+ScoreBoardKS: '&eKS: &f'
+ScoreBoardCoins: '&eCoins: &f'
+ScoreBoardXP: '&eXP: &f'
+ScoreBoardLevel: '&eLevel: &f'
+ScoreBoardNeedXP: '&eNext XP: &f'
+
+#Colors of the scoreboard wave animation
+#Dont put anything that is not a color here
+#And dont put spaces
+ScoreBoardWaveColor1: '&6&l'
+ScoreBoardWaveColor2: '&e&l'
+ScoreBoardWaveColor3: '&f&l'

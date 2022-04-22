@@ -2,7 +2,7 @@
 /*     */ 
 /*     */ import java.io.File;
 /*     */ import java.io.IOException;
-
+import java.util.Arrays;
 /*     */
 import java.util.HashMap;
 import java.util.List;
@@ -31,10 +31,12 @@ import me.RafaelAulerDeMeloAraujo.Listeners.PlaceEvent;
 import me.RafaelAulerDeMeloAraujo.Listeners.Protection;
 /*     */ import me.RafaelAulerDeMeloAraujo.Listeners.Soup;
 /*     */ import me.RafaelAulerDeMeloAraujo.Listeners.SoupSign;
+import me.RafaelAulerDeMeloAraujo.Listeners.StatusGUI;
 /*     */ import me.RafaelAulerDeMeloAraujo.Listeners.Switcher;
 /*     */ import me.RafaelAulerDeMeloAraujo.Listeners.ThrowTnt;
 /*     */ import me.RafaelAulerDeMeloAraujo.Listeners.WallClamber;
 import me.RafaelAulerDeMeloAraujo.PluginHooks.PlaceHolderAPIHook;
+import me.RafaelAulerDeMeloAraujo.ScoreboardManager.FastBoard;
 import me.RafaelAulerDeMeloAraujo.ScoreboardManager.ScoreboardBuilder;
 
 /*     */ 
@@ -82,9 +84,13 @@ import me.RafaelAulerDeMeloAraujo.SpecialAbility.Sonic;
 import me.RafaelAulerDeMeloAraujo.SpecialAbility.Vampire;
 /*     */ import me.RafaelAulerDeMeloAraujo.SpecialAbility.Viper;
 import me.RafaelAulerDeMeloAraujo.TitleAPI.TitleAPI;
+import me.RafaelAulerDeMeloAraujo.Warps.SettingsManager;
+import me.RafaelAulerDeMeloAraujo.X1.SetSumo;
 /*     */ import me.RafaelAulerDeMeloAraujo.X1.SetX1;
+import me.RafaelAulerDeMeloAraujo.X1.Sumo;
 /*     */ import me.RafaelAulerDeMeloAraujo.X1.X1;
-
+import us.ajg0702.leaderboards.LeaderboardPlugin;
+import us.ajg0702.leaderboards.boards.TopManager;
 
 /*     */ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -114,8 +120,11 @@ import org.bukkit.inventory.ItemStack;
 /*     */ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+
+
+import eu.decentsoftware.holograms.api.DHAPI;
+import eu.decentsoftware.holograms.api.holograms.Hologram;
+import lombok.Getter;
 
 
 
@@ -154,10 +163,12 @@ private me.RafaelAulerDeMeloAraujo.ScoreboardManager.ScoreboardBuilder scoreboar
 /*     */   private static ConfigUtils cH;
 /*  98 */   public static File file_x1 = new File("plugins/KP-PVP", "1v1.yml");
 /*     */   
+SettingsManager settings = SettingsManager.getInstance();
 /*     */   public static Main getPlugin()
 /*     */   {
 /* 102 */     return instance;
 /*     */   }
+
 /*     */   
 
 /*     */   public void onEnable()
@@ -179,15 +190,6 @@ metrics.addCustomChart(new Metrics.DrilldownPie("serverAddress", () -> {
 	return map;
 }));
 
-new BukkitRunnable() {
-	
-	@Override
-	public void run() {
-		for (Player p1 : Bukkit.getOnlinePlayers()) {
-			if (Main.plugin.getConfig().getBoolean("bungeemode")) {
-		ScoreboardBuilder.update(p1);
-	}
-	}}}.runTaskTimer(this, 0, 30 * 20L);
 
 
 
@@ -244,8 +246,17 @@ kits.load(kitsf);
 /*     */     {
 /* 144 */       System.out.println(e1.getMessage());
 /*     */     }
-
+Bukkit.getConsoleSender().sendMessage("§e[KP-PVP] §aLoading top kills system");
 loadTopPlayersHologram();
+Bukkit.getConsoleSender().sendMessage("§e[KP-PVP] §aTopKills Initilizated");
+if (Main.getInstance().getConfig().getBoolean("ScoreBoardEnabled")) {
+	Bukkit.getConsoleSender().sendMessage("§e[KP-PVP] §aLoading scoreboard");
+	loadScore();
+Bukkit.getConsoleSender().sendMessage("§e[KP-PVP] §aScoreboard Initilizated");
+}
+Bukkit.getConsoleSender().sendMessage("§e[KP-PVP] §aSetupping warps");
+settings.setup(this);
+Bukkit.getConsoleSender().sendMessage("§e[KP-PVP] §aWarps Loaded");
 /* 146 */     if ((Bukkit.getVersion().contains("1.9") || (Bukkit.getVersion().contains("1.10") || (Bukkit.getVersion().contains("1.11") || (Bukkit.getVersion().contains("1.12"))))))
 /*     */     {
 /* 148 */       getConfig().options().copyDefaults(true);
@@ -322,6 +333,8 @@ getCommand("settopkills").setExecutor(new SetTopKills());
 getCommand("updatetopkill").setExecutor(new UpdateTopKill());
 /* 198 */     getCommand("adminmode").setExecutor(new AdminMode(this));
 /* 201 */     getCommand("kpvp").setExecutor(new Kits(this));
+getCommand("kpsetwarp").setExecutor(new Warp());
+getCommand("kpwarp").setExecutor(new Warp());
 /* 202 */     getCommand("freezer").setExecutor(new Kits(this));
 /* 203 */     getCommand("basic").setExecutor(new Basic(this));
 getCommand("kposeidon").setExecutor(new Poseidonkit(this));
@@ -359,6 +372,7 @@ getCommand("kmonk").setExecutor(new MonkCMD(this));
 /* 226 */     getCommand("kpshop").setExecutor(new Shop(this));
 /* 227 */     getCommand("kploja").setExecutor(new Shop(this));
 /* 228 */     getCommand("shopmenu").setExecutor(new Shop(this));
+getCommand("setsumo").setExecutor(new SetSumo());
 getCommand("setarena").setExecutor(new  me.RafaelAulerDeMeloAraujo.main.SetArena());
 /* 229 */     getCommand("kpkitmenu").setExecutor(new NewKitMenu(this));
 /* 230 */     getCommand("kitsc").setExecutor(new StaffChat(this));
@@ -386,36 +400,96 @@ this.pm.registerEvents(new ClickTest(), this);
 /* 247 */     getCommand("set1v1").setExecutor(new SetX1());
 /*     */   }
 public static void handleTopPlayers(Location location) {
-	List<Player> topPlayers = Join.player.stream().sorted((x, y) ->
-			Integer.compare(AntiDeathDrop.GetKills(x), AntiDeathDrop.GetKills(y))
-	).limit(16).collect(Collectors.toList());
-	
-	Hologram hologram = topPlayersHd != null ?
-			topPlayersHd : (topPlayersHd = HologramsAPI.createHologram(Main.getInstance(), location));
-
-	hologram.teleport(location);
-	hologram.clearLines();
-	
-	try {
-		hologram.appendTextLine("§e§lTop 15 Players §6§l(KILL)");
-		
-		for (int i = 0; i < 15; i++) {
-			int position = i + 1;
-			Player helixPlayer = (topPlayers.size() - 1) > i ? topPlayers.get(i) : null;
-				hologram.appendTextLine(helixPlayer == null ? "§cNot Found." :
-				"§6" + position + "º " + "§e" + helixPlayer.getName() + " §e- " +
-				"§fKills: §6" + HelixDecimalFormat.format(AntiDeathDrop.GetKills(helixPlayer)));
-				
-		}
-	} catch (Exception e) {
-		e.printStackTrace();
+	Plugin lb = Bukkit.getPluginManager().getPlugin("ajLeaderboards");
+	if (lb == null || !lb.isEnabled() || !(lb instanceof LeaderboardPlugin)) {
+		Bukkit.getLogger().severe("AjLeaderBoards not found! TopKills will not work.");
+		return;
+	}
+	Plugin dc = Bukkit.getPluginManager().getPlugin("DecentHolograms");
+	if (dc == null) {
+		Bukkit.getLogger().severe("DecentHolograms not found! TopKills will not work.");
+		return;
+	}
+	LeaderboardPlugin ajlb = (LeaderboardPlugin) lb;
+	if (!ajlb.getCache().createBoard("kp-pvp_player_kills")) {
+		Bukkit.getLogger().severe("[KP-PVP] TopKills Creation Failed. Aborting");
+		return;
 	}
 	
+	
+	
+	
+
+		String header = "§e§lTop 15 players §a(KILLS)";	
+			List<String> lines = Arrays.asList(header,
+				"§61"  + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_1_alltime_name%" +
+				" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_1_alltime_value%", "§62" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_2_alltime_name%" +
+						" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_2_alltime_value%", "§63" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_3_alltime_name%" +
+								" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_3_alltime_value%", "§64" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_4_alltime_name%" +
+										" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_4_alltime_value%", "§65" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_5_alltime_name%" +
+												" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_5_alltime_value%", "§66" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_6_alltime_name%" +
+														" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_6_alltime_value%", "§67" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_7_alltime_name%" +
+																" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_7_alltime_value%", "§68" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_8_alltime_name%" +
+																		" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_8_alltime_value%", "§69" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_9_alltime_name%" +
+																				" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_9_alltime_value%", "§610" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_10_alltime_name%" +
+																						" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_10_alltime_value%", "§611" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_11_alltime_name%" +
+																								" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_11_alltime_value%", "§612" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_10_alltime_name%" +
+																										" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_12_alltime_value%", "§613" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_10_alltime_name%" +
+																												" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_13_alltime_value%", "§614" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_10_alltime_name%" +
+																														" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_14_alltime_value%", "§615" + "º " + "§e" + "%ajlb_lb_kp-pvp_player_kills_10_alltime_name%" +
+																																" §fKills: §6" + "%ajlb_lb_kp-pvp_player_kills_15_alltime_value%");
+		
+		
+			
+			Bukkit.getConsoleSender().sendMessage("[KP-PVP] Updating TopKills entries...");
+		Hologram hologram = DHAPI.getHologram("topkills");
+		if (hologram == null) {
+			 Bukkit.getConsoleSender().sendMessage("[KP-PVP] Creating hologram...");
+		 Hologram holo = DHAPI.createHologram("topkills", location, true, lines);
+	 holo.updateAll();
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			if (p.hasPermission("ajleaderboards.dontupdate.kp-pvp_player_kills") && !Main.getInstance().getConfig().getBoolean("disable-negation-of-ajleaderboards-no-update-permission")) {
+		        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + p.getName() + " permission set ajleaderboards.dontupdate.kp-pvp_player_kills false");
+			}
+		}
+		}
+		
+		
+			DHAPI.updateHologram("topkills");
+			Bukkit.getConsoleSender().sendMessage("[KP-PVP] TopKills Hologram Updated!");
 }
+	
+
+public static void loadScore() {
+	new BukkitRunnable() {
+		
+		@Override
+		public void run() {
+			for (Player p1 : Bukkit.getOnlinePlayers()) {
+				if (Join.game.contains(p1.getName())) {
+				            for (FastBoard board : ScoreboardBuilder.boards.values()) {
+				                ScoreboardBuilder.build(board);
+				            }
+					 		}
+								else if (!Join.game.contains(p1.getName()) && Join.savescore.containsKey(p1.getName())) {
+									FastBoard board = ScoreboardBuilder.boards.get(p1.getUniqueId());
+
+							        if (board != null && !board.isDeleted()) {
+							            board.delete();
+							        }
+									p1.setScoreboard(Join.savescore.get(p1.getName()));
+									
+				
+								}}}}.runTaskTimer(Main.getInstance(), 10 * 20L, 20L * Main.getInstance().getConfig().getInt("ScoreBoard-Interval-Update"));
+		}
 public static void loadTopPlayersHologram() {
 	new BukkitRunnable() {
 		@Override
 		public void run() {
+			if (Main.plugin.getConfig().getString("TOP.World") == null) {
+				Bukkit.getLogger().severe("[KP-PVP] TopKills is not seted. Please set it with /settopkills command");
+				return;
+			}
 		      World w = Bukkit.getServer().getWorld(Main.plugin.getConfig().getString("TOP.World"));
 		  	/* 201 */           double x = Main.plugin.getConfig().getDouble("TOP.X");
 		  	/* 202 */           double y = Main.plugin.getConfig().getDouble("TOP.Y");
@@ -440,7 +514,10 @@ public static void loadTopPlayersHologram() {
               this.pm.registerEvents(new Poseidon(), this);
               this.pm.registerEvents(new Anchor(this), this);
               this.pm.registerEvents(new Fireman(), this);
+              this.pm.registerEvents(new StatusGUI(), this);
               this.pm.registerEvents(new Monk(), this);
+              this.pm.registerEvents(new Sumo(this), this);
+              this.pm.registerEvents(new WarpMenu(), this);
               this.pm.registerEvents(new ConfuserHability(this), this);
 /* 256 */     this.pm.registerEvents(new NewKitMenu(this), this);
 /* 257 */     this.pm.registerEvents(new Sponge(this), this);
@@ -602,9 +679,12 @@ public void onDisable()
   /* 306 */       p.getInventory().setContents((ItemStack[])Join.saveinv.get(p.getName()));
   /* 307 */       p.setGameMode((GameMode)Join.savegamemode.get(p.getName()));
   p.setLevel(Join.savelevel.get(p.getName()));
-
+  p.setScoreboard(Join.savescore.get(p.getName()));
   /* 308 */       p.getInventory().setArmorContents((ItemStack[])Join.savearmor.get(p.getName()));
-
+  p.setFoodLevel(Join.savehunger.get(p.getName()));
+  p.setRemainingAir(Join.saveair.get(p.getName()));
+  p.setFlying(Join.saveflystate.get(p.getName()));
+  p.setAllowFlight(Join.saveflystate.get(p.getName()));
   /*     */   
   /* 311 */       p.updateInventory();
   API.tirarEfeitos(p);

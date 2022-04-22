@@ -73,13 +73,13 @@ import org.bukkit.ChatColor;
 /*  65 */         return;
 /*     */       }
 if (p2.getLocation().distance(p.getLocation()) > Main.kits.getDouble("NinjaErrorBlockNumber") && p2 != null) { 
-	p.sendMessage(API.NomeServer + Main.messages.getString("NinjaError").replace("&", "ง"));
+	p.sendMessage(API.NomeServer + Main.messages.getString("NinjaError").replace("&", "ยง"));
 	return;
 }   
 	/*  52 */       if ((!cooldownbk.containsKey(p.getName())) || (((Long)cooldownbk.get(p.getName())).longValue() <= System.currentTimeMillis() && p2 != null))
 	/*     */       {
 /*  71 */         p.teleport(p2.getLocation());
-p.sendMessage(Main.messages.getString("NinjaTeleport").replace("&", "ง").replace("%player%", p2.getName()));
+p.sendMessage(Main.messages.getString("NinjaTeleport").replace("&", "ยง").replace("%player%", p2.getName()));
 /*  73 */         cooldownbk.put(p.getName(), Long.valueOf(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(Main.kits.getLong("NinjaCooldown"))));
 /*  80 */         return;
 /*     */       }
@@ -94,52 +94,38 @@ p.sendMessage(Main.messages.getString("NinjaTeleport").replace("&", "ง").replace
 /*     */   public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args)
 /*     */   {
 /*  89 */     Player p = (Player)sender;
-/*  90 */     ItemStack dima = new ItemStack(Material.DIAMOND_SWORD);
-/*  91 */     ItemMeta souperaa = dima.getItemMeta();
-/*  92 */     souperaa.setDisplayName("งcSword");
-/*  93 */     dima.setItemMeta(souperaa);
+/*  90 */     
 /*  94 */     ItemStack sopa = new ItemStack(Material.MUSHROOM_SOUP);
 /*  95 */     ItemMeta sopas = sopa.getItemMeta();
-/*  96 */     sopas.setDisplayName("ง6Soup");
+/*  96 */     sopas.setDisplayName("ยง6Soup");
 /*  97 */     sopa.setItemMeta(sopas);
 /*     */     
-/*  99 */     ItemStack capacete0 = new ItemStack(Material.IRON_HELMET);
-/*     */     
-/* 101 */     ItemStack peitoral0 = new ItemStack(Material.IRON_CHESTPLATE);
-/*     */     
-/* 103 */     ItemStack calca0 = new ItemStack(Material.IRON_LEGGINGS);
-/*     */     
-/* 105 */     ItemStack Bota0 = new ItemStack(Material.IRON_BOOTS);
+/*  99 */     
 /*     */     
 /*     */ 
 /*     */ 
 /* 109 */     if (cmd.equalsIgnoreCase("ninja")) {
 /* 110 */       if (Habilidade.ContainsAbility(p)) {
-/* 111 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "ง")) + this.main.getConfig().getString("Message.KitUse").replace("&", "ง"));
+/* 111 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "ยง")) + this.main.getConfig().getString("Message.KitUse").replace("&", "ยง"));
 /* 112 */         p.playSound(p.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.KitUse")), 1.0F, 1.0F);
 /* 113 */         return true;
 /*     */       }
 /* 115 */       if (!Join.game.contains(p.getName()))
 /*     */       {
-/* 117 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "ง")) + " งeYou are not in kitpvp to choose this kit!");
+/* 117 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "ยง")) + " ยงeYou are not in kitpvp to choose this kit!");
 /* 118 */         return true;
 /*     */       }
 /* 120 */       if (!p.hasPermission("kitpvp.kit.ninja")) {
-/* 121 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "ง")) + this.main.getConfig().getString("Permission").replace("&", "ง").replaceAll("%permisson%", cmd));
+/* 121 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "ยง")) + this.main.getConfig().getString("Permission").replace("&", "ยง").replaceAll("%permisson%", cmd));
 /* 122 */         return true;
 /*     */       }
 /*     */       
-/* 125 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "ง")) + this.main.getConfig().getString("Message.Kit").replaceAll("%kit%", "Ninja").replace("&", "ง"));
+/* 125 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "ยง")) + this.main.getConfig().getString("Message.Kit").replaceAll("%kit%", "Ninja").replace("&", "ยง"));
 /* 126 */       p.setGameMode(GameMode.ADVENTURE);
 /* 127 */       p.getInventory().clear();
 /* 128 */       Habilidade.setAbility(p, "Ninja");
 /*     */       
-/* 130 */       p.getInventory().setHelmet(capacete0);
-/* 131 */       p.getInventory().setChestplate(peitoral0);
-/* 132 */       p.getInventory().setLeggings(calca0);
-/* 133 */       p.getInventory().setBoots(Bota0);
-/*     */       
-/* 135 */       p.getInventory().addItem(new ItemStack[] { dima });
+/* 130 */       
 /*     */       API.give(p);
 RTP.TeleportArenaRandom(p);
 /* 137 */       for (int i = 0; i <= 34; i++) {

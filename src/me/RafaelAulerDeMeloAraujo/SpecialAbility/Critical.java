@@ -99,22 +99,11 @@ import me.RafaelAulerDeMeloAraujo.main.RTP;
 /*  94 */       sopa.setItemMeta(sopas);
 /*     */       
 /*     */ 
-/*  97 */       ItemStack capacete0 = new ItemStack(Material.IRON_HELMET);
-/*     */       
-/*  99 */       ItemStack peitoral0 = new ItemStack(Material.IRON_CHESTPLATE);
-/*     */       
-/* 101 */       ItemStack calca0 = new ItemStack(Material.IRON_LEGGINGS);
-/*     */       
-/* 103 */       ItemStack Bota0 = new ItemStack(Material.IRON_BOOTS);
-/*     */       
-/* 105 */       p.getInventory().setHelmet(capacete0);
-/* 106 */       p.getInventory().setChestplate(peitoral0);
-/* 107 */       p.getInventory().setLeggings(calca0);
-/* 108 */       p.getInventory().setBoots(Bota0);
+/*  97 */      
 /*     */       
 /* 110 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + this.main.getConfig().getString("Message.Kit").replaceAll("%kit%", "Critical").replace("&", "§"));
 /* 111 */       Habilidade.setAbility(p, "Critical");
-/* 112 */       p.getInventory().addItem(new ItemStack[] { dima });
+/* 112 */      
 /*     */       API.give(p);
 /*     */ RTP.TeleportArenaRandom(p);
 /*     */ 

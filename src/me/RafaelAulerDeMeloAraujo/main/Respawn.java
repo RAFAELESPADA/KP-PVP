@@ -53,7 +53,6 @@ public class Respawn implements Listener {
 	}
 
 	private void respawnPlayer(Player p) {
-		
 			
 			Location deathLocation = p.getLocation();
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> p.spigot().respawn(), 1);
@@ -90,15 +89,9 @@ public class Respawn implements Listener {
 							/* 199 */       Cooldown.remove(p);
 							
 							  X1.entrar1v1(p);
-
-							  World w = Bukkit.getServer().getWorld(Main.plugin.getConfig().getString("SpawnD.World"));
-						      double x = Main.cfg_x1.getDouble("x1.coords.loc_1.x");
-						      double y = Main.cfg_x1.getDouble("x1.coords.loc_1.y");
-						      double z = Main.cfg_x1.getDouble("x1.coords.loc_1.z");
-						      Location onevsone = new Location(w, x, y, z);
-						      onevsone.setPitch((float)Main.cfg_x1.getDouble("x1.coords.loc_2.pitch"));
-						      onevsone.setYaw((float)Main.cfg_x1.getDouble("x1.coords.loc_2.yaw"));
-							  p.teleport(onevsone);
+							  
+							  /*     */     
+								Bukkit.getConsoleSender().sendMessage("[KP-PVP] " + p.getName() + " Respawned on 1V1.");
 							p.sendMessage(ChatColor.YELLOW + "You respawned");
 							p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 0));
 							p.playSound(p.getLocation(), org.bukkit.Sound.valueOf(Main.getInstance().getConfig().getString("Sound.RespawnSucess")), 3.0F, 3.0F);
@@ -107,10 +100,8 @@ public class Respawn implements Listener {
 							cancel();
 							
 						}
-						
-					}
-					
-				}.runTaskTimer(Main.getInstance(), 0L, 20L);
+					}}	
+				.runTaskTimer(Main.getInstance(), 0L, 20L);
 			} else {
 				new BukkitRunnable() {
 					
@@ -157,6 +148,11 @@ public class Respawn implements Listener {
 							/* 229 */           stats.setItemMeta(stats2);
 							p.getInventory().setItem(3, stats);
 							p.getInventory().setItem(0, shop);
+							ItemStack warp = new ItemStack(Material.PAPER);
+							/* 227 */           ItemMeta warp2 = warp.getItemMeta();
+							/* 228 */           warp2.setDisplayName("§aWarps");
+							/* 229 */           warp.setItemMeta(warp2);
+							p.getInventory().setItem(8, warp);
 							ItemStack stats1 = new ItemStack(Material.WOOD_SWORD);
 							/* 227 */           ItemMeta stats12 = kits.getItemMeta();
 							/* 228 */           stats12.setDisplayName(Main.messages.getString("ClickTestItemName").replace("&", "§"));
@@ -184,7 +180,7 @@ public class Respawn implements Listener {
 							/* 197 */       Deshfire.cooldownm.remove(p);
 							/*     */       p.setGameMode(GameMode.SURVIVAL);
 							/* 199 */       Cooldown.remove(p);
-
+							Bukkit.getConsoleSender().sendMessage("[KP-PVP] " + p.getName() + " Respawned on Spawn.");
 							p.teleport(lobby);
 							p.sendMessage(ChatColor.YELLOW + "You respawned");
 							p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 0));

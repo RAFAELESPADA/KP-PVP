@@ -71,37 +71,37 @@ public class Phantom implements Listener
             Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Main.getInstance(), (Runnable)new Runnable() {
                 @Override
                 public void run() {
-                	p.sendMessage(String.valueOf(API.NomeServer) + (Main.messages.getString("PhantomFly").replace("&", "ง")).replace("%time%", "5"));
+                	p.sendMessage(String.valueOf(API.NomeServer) + (Main.messages.getString("PhantomFly").replace("&", "ยง")).replace("%time%", "5"));
                 }
             }, 0L);
             Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Main.getInstance(), (Runnable)new Runnable() {
                 @Override
                 public void run() {
-                	p.sendMessage(String.valueOf(API.NomeServer) + (Main.messages.getString("PhantomFly").replace("&", "ง")).replace("%time%", "4"));
+                	p.sendMessage(String.valueOf(API.NomeServer) + (Main.messages.getString("PhantomFly").replace("&", "ยง")).replace("%time%", "4"));
                 }
             }, 20L);
             Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Main.getInstance(), (Runnable)new Runnable() {
                 @Override
                 public void run() {
-                	p.sendMessage(String.valueOf(API.NomeServer) + (Main.messages.getString("PhantomFly").replace("&", "ง")).replace("%time%", "3"));
+                	p.sendMessage(String.valueOf(API.NomeServer) + (Main.messages.getString("PhantomFly").replace("&", "ยง")).replace("%time%", "3"));
                 }
             }, 40L);
             Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Main.getInstance(), (Runnable)new Runnable() {
                 @Override
                 public void run() {
-                	p.sendMessage(String.valueOf(API.NomeServer) + (Main.messages.getString("PhantomFly").replace("&", "ง")).replace("%time%", "2"));
+                	p.sendMessage(String.valueOf(API.NomeServer) + (Main.messages.getString("PhantomFly").replace("&", "ยง")).replace("%time%", "2"));
                 }
             }, 60L);
             Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Main.getInstance(), (Runnable)new Runnable() {
                 @Override
                 public void run() {
-                	p.sendMessage(String.valueOf(API.NomeServer) + (Main.messages.getString("PhantomFly").replace("&", "ง")).replace("%time%", "1"));
+                	p.sendMessage(String.valueOf(API.NomeServer) + (Main.messages.getString("PhantomFly").replace("&", "ยง")).replace("%time%", "1"));
                 }
             }, 80L);
             Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)Main.getInstance(), (Runnable)new Runnable() {
                 @Override
                 public void run() {
-                	p.sendMessage(String.valueOf(API.NomeServer) + (Main.messages.getString("PhantomFlyEnd").replace("&", "ง")));
+                	p.sendMessage(String.valueOf(API.NomeServer) + (Main.messages.getString("PhantomFlyEnd").replace("&", "ยง")));
                     Phantom.emphantom.remove(p.getName());
                     p.getInventory().setArmorContents((ItemStack[])Phantom.salvararmor.get(p.getName()));
                     p.updateInventory();

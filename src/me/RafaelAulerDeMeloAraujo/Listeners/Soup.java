@@ -4,7 +4,7 @@ import me.RafaelAulerDeMeloAraujo.SpecialAbility.Join;
 /*    */ 
 /*    */ import me.RafaelAulerDeMeloAraujo.main.Main;
 
-
+import org.bukkit.Bukkit;
 /*    */ 
 /*    */ import org.bukkit.Material;
 /*    */ import org.bukkit.Sound;
@@ -13,6 +13,7 @@ import me.RafaelAulerDeMeloAraujo.SpecialAbility.Join;
 /*    */ import org.bukkit.event.EventHandler;
 /*    */ import org.bukkit.event.Listener;
 /*    */ import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 /*    */
 /*    */ 
 /*    */ public class Soup implements Listener
@@ -43,11 +44,55 @@ p.setFoodLevel(20);
 /* 38 */          if(main.getConfig().getBoolean(".KeepBowl"))
     e.getItem().setType(Material.BOWL);
 else
-    e.getItem().setAmount(0);
+	setOffhandItem(p, new ItemStack(Material.AIR));
+
 
 	
 /*    */       }
 /*    */     }
+@SuppressWarnings("deprecation")
+public static void setOffhandItem(Player p, ItemStack item) {
+		
+		if (versionToNumber() == 18) {
+			p.setItemInHand(item);
+		} else if (versionToNumber() > 18) {
+			p.getInventory().setItemInOffHand(item);
+			p.setItemInHand(item);
+		} else {
+			p.setItemInHand(item);
+		}
+		
+	}
+public static int versionToNumber() {
+
+	String version = Bukkit.getVersion();
+
+	if (version.contains("1.8")) {
+		return 18;
+	} else if (version.contains("1.9")) {
+		return 19;
+	} else if (version.contains("1.10")) {
+		return 110;
+	} else if (version.contains("1.11")) {
+		return 111;
+	} else if (version.contains("1.12")) {
+		return 112;
+	} else if (version.contains("1.13")) {
+		return 113;
+	} else if (version.contains("1.14")) {
+		return 114;
+	} else if (version.contains("1.15")) {
+		return 115;
+	} else if (version.contains("1.16")) {
+		return 116;
+	} else if (version.contains("1.17")) {
+		return 117;
+	} else if (version.contains("1.18")) {
+		return 118;
+	}
+		return 500;
+		
+	}
 /*    */   }
 
 /*    */ 

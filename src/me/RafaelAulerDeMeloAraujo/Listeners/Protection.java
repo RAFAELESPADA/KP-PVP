@@ -35,6 +35,9 @@ public void onEntityDamageByEntity(final EntityDamageByEntityEvent event) {
 		if (Habilidade.getAbility(damaged) == Main.cfg_x1.getString("x1.ability")) {
 			event.setCancelled(true);
 		}
+		if (Habilidade.getAbility(damaged) == Main.cfg_x1.getString("sumo.ability")) {
+			event.setCancelled(true);
+		}
 		}
 	}
 }

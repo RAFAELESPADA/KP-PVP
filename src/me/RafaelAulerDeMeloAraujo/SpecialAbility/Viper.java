@@ -99,19 +99,7 @@ import me.RafaelAulerDeMeloAraujo.main.RTP;
 /*  90 */       p.setGameMode(GameMode.ADVENTURE);
 /*  91 */       p.getInventory().clear();
 /*  92 */       Habilidade.setAbility(p, "Viper");
-/*  93 */       ItemStack capacete0 = new ItemStack(Material.LEATHER_HELMET);
-/*     */       
-/*  95 */       ItemStack peitoral0 = new ItemStack(Material.IRON_CHESTPLATE);
-/*     */       
-/*  97 */       ItemStack calca0 = new ItemStack(Material.IRON_LEGGINGS);
-/*     */       
-/*  99 */       ItemStack Bota0 = new ItemStack(Material.IRON_BOOTS);
-/*     */       
-/* 101 */       p.getInventory().setHelmet(capacete0);
-/* 102 */       p.getInventory().setChestplate(peitoral0);
-/* 103 */       p.getInventory().setLeggings(calca0);
-/* 104 */       p.getInventory().setBoots(Bota0);
-/* 105 */       p.getInventory().addItem(new ItemStack[] { dima });
+/*  93 */       
 /*     */       API.give(p);
 RTP.TeleportArenaRandom(p);
 /* 107 */       for (int i = 0; i <= 34; i++) {

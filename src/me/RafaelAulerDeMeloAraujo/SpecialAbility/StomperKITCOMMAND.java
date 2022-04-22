@@ -57,10 +57,7 @@ if (Main.kits.getBoolean("StomperDisabled")) {
 	return true;
 }
 /* 52 */       p.getInventory().clear();
-/* 53 */       ItemStack dima = new ItemStack(Material.DIAMOND_SWORD);
-/* 54 */       ItemMeta souperaa = dima.getItemMeta();
-/* 55 */       souperaa.setDisplayName("§cSword");
-/* 56 */       dima.setItemMeta(souperaa);
+/* 53 */       
 /* 57 */       ItemStack sopa = new ItemStack(Material.MUSHROOM_SOUP);
 /* 58 */       ItemMeta sopas = sopa.getItemMeta();
 /* 59 */       sopas.setDisplayName("§6Soup");
@@ -70,26 +67,16 @@ if (Main.kits.getBoolean("StomperDisabled")) {
 /* 63 */       especial2.setDisplayName("§9Boost");
 /* 64 */       especial.setItemMeta(especial2);
 /*    */       
-/* 66 */       ItemStack capacete0 = new ItemStack(Material.IRON_HELMET);
-/*    */       
-/* 68 */       ItemStack peitoral0 = new ItemStack(Material.IRON_CHESTPLATE);
-/*    */       
-/* 70 */       ItemStack calca0 = new ItemStack(Material.IRON_LEGGINGS);
-/*    */       
-/* 72 */       ItemStack Bota0 = new ItemStack(Material.IRON_BOOTS);
-/*    */       
-/* 74 */       p.getInventory().setHelmet(capacete0);
-/* 75 */       p.getInventory().setChestplate(peitoral0);
-/* 76 */       p.getInventory().setLeggings(calca0);
-/* 77 */       p.getInventory().setBoots(Bota0);
+/* 66 */       
 /*    */       
 /* 79 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + this.main.getConfig().getString("Message.Kit").replaceAll("%kit%", "Stomper").replace("&", "§"));
 /* 80 */       Habilidade.setAbility(p, "Stomper");
-/* 81 */       p.getInventory().addItem(new ItemStack[] { dima });
-/* 82 */       p.getInventory().addItem(new ItemStack[] { especial });
+/* 81 */       
+/* 82 */       
 /*    */       
 /*    */ 
 /*    */ API.give(p);
+p.getInventory().setItem(1, especial);
 RTP.TeleportArenaRandom(p);
 /* 86 */       for (int i = 0; i <= 34; i++) {
 /* 87 */         p.getInventory().addItem(new ItemStack[] { sopa });

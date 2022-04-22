@@ -233,25 +233,17 @@ if (Main.kits.getBoolean("KangarooDisabled")) {
 /* 220 */       p.setGameMode(GameMode.ADVENTURE);
 /*     */       
 /* 222 */       Habilidade.setAbility(p, "Kangaroo");
-/* 223 */       ItemStack capacete0 = new ItemStack(Material.IRON_HELMET);
+/* 223 */       
 /*     */       
-/* 225 */       ItemStack peitoral0 = new ItemStack(Material.IRON_CHESTPLATE);
-/*     */       
-/* 227 */       ItemStack calca0 = new ItemStack(Material.IRON_LEGGINGS);
-/*     */       
-/* 229 */       ItemStack Bota0 = new ItemStack(Material.IRON_BOOTS);
-/*     */       
-/* 231 */       p.getInventory().setHelmet(capacete0);
-/* 232 */       p.getInventory().setChestplate(peitoral0);
-/* 233 */       p.getInventory().setLeggings(calca0);
-/* 234 */       p.getInventory().setBoots(Bota0);
-/* 235 */       p.getInventory().addItem(new ItemStack[] { dima });
-/* 236 */       p.getInventory().addItem(new ItemStack[] { monk });
+/* 231 */       
+/* 235 */       
+/* 236 */       
 /*     */       API.give(p);
 RTP.TeleportArenaRandom(p);
 /* 238 */       for (int i = 0; i <= 34; i++) {
 /* 239 */         p.getInventory().addItem(new ItemStack[] { sopa });
 /*     */       }
+p.getInventory().setItem(1, monk);
 /*     */     }
 /*     */     
 /* 243 */     TitleAPI.sendTitle(p, Integer.valueOf(20), Integer.valueOf(60), Integer.valueOf(20), this.main.getConfig().getString("Title.KitTitle"), this.main.getConfig().getString("Title.KitSubTitle").replaceAll("%kit%", "Kangaroo"));

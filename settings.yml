@@ -6,6 +6,9 @@ Lost-Coins-Per-Death: 50
 XPEarned-OnKill: 25
 #XP Lost on death
 XPLost-OnDeath: 10
+#XP REQUIRED TO LEVELUP
+XP-Required-To-LevelUP: 200
+
 
 #Customize here the killstreak rewards
 KS-3: 150

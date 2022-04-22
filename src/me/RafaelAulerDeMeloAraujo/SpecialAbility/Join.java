@@ -6,9 +6,16 @@ import java.util.Collection;
 /*     */ import java.util.HashMap;
 /*     */ import java.util.List;
 
-
+import me.RafaelAulerDeMeloAraujo.Coins.Coins;
+import me.RafaelAulerDeMeloAraujo.Coins.XP;
+import me.RafaelAulerDeMeloAraujo.ScoreboardManager.FastBoard;
+import me.RafaelAulerDeMeloAraujo.ScoreboardManager.Level;
+import me.RafaelAulerDeMeloAraujo.ScoreboardManager.ScoreboardBuilder;
+import me.RafaelAulerDeMeloAraujo.ScoreboardManager.Streak;
+import me.RafaelAulerDeMeloAraujo.ScoreboardManager.WaveAnimation;
 /*     */ import me.RafaelAulerDeMeloAraujo.TitleAPI.TitleAPI;
 /*     */ import me.RafaelAulerDeMeloAraujo.X1.X1;
+import me.RafaelAulerDeMeloAraujo.main.AntiDeathDrop;
 /*     */ import me.RafaelAulerDeMeloAraujo.main.Main;
 
 
@@ -37,6 +44,7 @@ import org.bukkit.Effect;
 /*     */ import org.bukkit.plugin.PluginManager;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Scoreboard;
 /*     */ 
 /*     */ 
 /*     */ 
@@ -52,15 +60,19 @@ import org.bukkit.scheduler.BukkitRunnable;
 /*  44 */   public static HashMap<String, ItemStack[]> savearmor = new HashMap();
 /*  45 */   public static HashMap<String, Location> saveworld = new HashMap();
 /*  46 */   public static HashMap<String, GameMode> savegamemode = new HashMap();
+public static HashMap<String, Scoreboard> savescore = new HashMap();
 public static HashMap<String, Integer> savelevel = new HashMap();
+public static HashMap<String, Integer> savehunger = new HashMap();
 public static HashMap<String, PotionEffect> saveeffect = new HashMap();
-
+public static HashMap<String, Integer> saveair = new HashMap();
+public static HashMap<String, Boolean> saveflystate = new HashMap();
 /*     */ 
 /*     */ 
 /*     */   private Main main;
 /*     */   
 /*     */ 
-/*     */ 
+/*     */ private static WaveAnimation waveAnimation;
+private static String text = "";
 /*     */   static Main plugin;
 /*     */   
 /*     */ 
@@ -210,7 +222,6 @@ public static ArrayList<Player> player = new ArrayList();
 	/*  88 */       lobby.setYaw((float)Main.plugin.getConfig().getDouble("Spawn.Yaw"));
 	/*  89 */       p.getInventory().clear();
 	/*  90 */       p.teleport(lobby);
-	/*     */       
 	/*  92 */       p.getInventory().setLeggings(new ItemStack(Material.AIR));
 	/*  93 */       p.getInventory().setBoots(new ItemStack(Material.AIR));
 	/*  94 */       p.getInventory().addItem(new ItemStack[] { new ItemStack(make(Material.BOOK, 1, 0, Main.messages.getString("KitItemName").replace("&", "§"), Arrays.asList(new String[] { this.main.getConfig().getString("JoinItem.Lore").replace("&", "§") }))) });
@@ -227,6 +238,11 @@ public static ArrayList<Player> player = new ArrayList();
 	/* 228 */           stats2.setDisplayName(Main.messages.getString("StatsItemName").replace("&", "§"));
 	/* 229 */           stats.setItemMeta(stats2);
 	p.getInventory().setItem(3, stats);
+	ItemStack warp = new ItemStack(Material.PAPER);
+	/* 227 */           ItemMeta warp2 = warp.getItemMeta();
+	/* 228 */           warp2.setDisplayName("§aWarps");
+	/* 229 */           warp.setItemMeta(warp2);
+	p.getInventory().setItem(8, warp);
 	ItemStack stats1 = new ItemStack(Material.WOOD_SWORD);
 	/* 227 */           ItemMeta stats12 = stats1.getItemMeta();
 	/* 228 */           stats12.setDisplayName(Main.messages.getString("ClickTestItemName").replace("&", "§"));
@@ -290,24 +306,25 @@ public static ArrayList<Player> player = new ArrayList();
 /*     */ 
 /*     */ 
 /*     */ 
-/* 200 */           World w = Bukkit.getServer().getWorld(Main.plugin.getConfig().getString("Spawn.World"));
-/* 201 */           double x = Main.plugin.getConfig().getDouble("Spawn.X");
-/* 202 */           double y = Main.plugin.getConfig().getDouble("Spawn.Y");
-/* 203 */           double z = Main.plugin.getConfig().getDouble("Spawn.Z");
-/* 204 */           Location lobby = new Location(w, x, y, z);
-/* 205 */           saveworld.put(p.getName(), p.getLocation());
-
-/* 206 */           saveinv.put(p.getName(), p.getInventory().getContents());
-/* 207 */           savearmor.put(p.getName(), p.getInventory().getArmorContents());
-/* 208 */           savegamemode.put(p.getName(), p.getGameMode());
-/*     */           savelevel.put(p.getName(), p.getLevel());
-
-/*     */ 
-/* 211 */           lobby.setPitch((float)Main.plugin.getConfig().getDouble("Spawn.Pitch"));
-/* 212 */           lobby.setYaw((float)Main.plugin.getConfig().getDouble("Spawn.Yaw"));
-/* 213 */           p.getInventory().clear();
-/*     */           
-/*     */ 
+API.init();
+		/* 200 */           World w = Bukkit.getServer().getWorld(Main.plugin.getConfig().getString("Spawn.World"));
+		/* 201 */           double x = Main.plugin.getConfig().getDouble("Spawn.X");
+		/* 202 */           double y = Main.plugin.getConfig().getDouble("Spawn.Y");
+		/* 203 */           double z = Main.plugin.getConfig().getDouble("Spawn.Z");
+		/* 204 */           Location lobby = new Location(w, x, y, z);
+		/* 205 */           saveworld.put(p.getName(), p.getLocation());
+		                    savescore.put(p.getName(), p.getScoreboard());
+		/* 206 */           saveinv.put(p.getName(), p.getInventory().getContents());
+		/* 207 */           savearmor.put(p.getName(), p.getInventory().getArmorContents());
+		/* 208 */           savegamemode.put(p.getName(), p.getGameMode());
+		/*     */           savelevel.put(p.getName(), p.getLevel());
+		savehunger.put(p.getName(), p.getFoodLevel());
+		saveair.put(p.getName(), p.getRemainingAir());
+		saveflystate.put(p.getName(), p.getAllowFlight());
+		/*     */ 
+		/* 211 */           lobby.setPitch((float)Main.plugin.getConfig().getDouble("Spawn.Pitch"));
+		/* 212 */           lobby.setYaw((float)Main.plugin.getConfig().getDouble("Spawn.Yaw"));
+		/* 213 */           p.getInventory().clear();
 /* 216 */           p.teleport(lobby);
 /*     */           
 /*     */ 
@@ -333,7 +350,11 @@ ItemStack stats1 = new ItemStack(Material.WOOD_SWORD);
 /* 229 */           stats1.setItemMeta(stats12);
 
 /* 103 */     
-
+ItemStack warp = new ItemStack(Material.PAPER);
+/* 227 */           ItemMeta warp2 = warp.getItemMeta();
+/* 228 */           warp2.setDisplayName("§aWarps");
+/* 229 */           warp.setItemMeta(warp2);
+p.getInventory().setItem(8, warp);
 p.getInventory().setItem(4, stats1);
 /* 103 */       p.getInventory().addItem(new ItemStack[] { kits });
 /* 104 */       p.getInventory().addItem(new ItemStack[] { st });
@@ -353,7 +374,7 @@ API.tirarEfeitos(p);
 
 }
 
-}
+
 
 
 /*     */         
@@ -365,6 +386,8 @@ API.tirarEfeitos(p);
 /*     */ 
 /* 247 */       return false;
 /*     */    }
+return false;
+}
 /*     */     
 /*     */ 
 /*     */ 
@@ -437,8 +460,12 @@ if (Main.plugin.getConfig().getBoolean("bungeemode")) {
 /* 305 */       p.teleport((Location)saveworld.get(p.getName()));
 /* 306 */       p.getInventory().setContents((ItemStack[])saveinv.get(p.getName()));
 /* 307 */       p.setGameMode((GameMode)savegamemode.get(p.getName()));
+p.setScoreboard(savescore.get(p.getName()));
 p.setLevel(savelevel.get(p.getName()));
-
+p.setFoodLevel(savehunger.get(p.getName()));
+p.setRemainingAir(saveair.get(p.getName()));
+p.setFlying(saveflystate.get(p.getName()));
+p.setAllowFlight(saveflystate.get(p.getName()));
 /* 308 */       p.getInventory().setArmorContents((ItemStack[])savearmor.get(p.getName()));
 TitleAPI.sendTitle(p, Integer.valueOf(40), Integer.valueOf(80), Integer.valueOf(40), this.main.getConfig().getString("Title.LeaveTitle"), this.main.getConfig().getString("Title.LeaveSubTitle"));
 

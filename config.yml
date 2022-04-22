@@ -10,6 +10,14 @@
 #Prefix settings
 Prefix: '&8[&cKitPvP&8] '
 
+ScoreBoardEnabled: true
+
+#Interval to update the scoreboard
+ScoreBoard-Interval-Update: 3
+
+#ENABLES OR DISABLES FULL IRON/ARMOR IN THE KITS (THIS ALSO CHANGES A LOT OF ITEMS WHEN SET TO FALSE
+FullIron: true
+ 
 #If this is enable the perworldsupport is disabled
 #and players is automatically put on kitpvp when they join the server
 #and will be unable to leave
@@ -26,6 +34,7 @@ KeepBowl: true
 #ALL PERMISSIONS IS LISTED HERE: https://pastebin.com/JuMPHpRD
 Permission: '&cSorry, but you dont have the permission to use this.'
 
+disable-negation-of-ajleaderboards-no-update-permission: false
 
 #Message settings
 Message:
@@ -63,6 +72,7 @@ Title:
   LeaveTitle: '&cYou leave the kitpvp!'
   LeaveSubTitle: '&cTo join again use: /kitpvp join'
   1v1Leave: '&aYou leave the 1v1'
+  SumoLeave: '&aYou leave the Sumo'
 #Respawn settings
 RespawnSound: true
 

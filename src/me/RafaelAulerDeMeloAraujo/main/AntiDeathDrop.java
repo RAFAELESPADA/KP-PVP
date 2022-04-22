@@ -74,8 +74,8 @@ public class AntiDeathDrop
         e.getDrops().clear();
         e.setDeathMessage("");
         double killstreak = XP.getXP(k.getName());
-		if (killstreak % 200 == 0) {
-			Streak.broadcast(String.valueOf(API.NomeServer + Main.messages.getString("LevelUP").replaceAll("%player%", k.getName()).replace("%level%", Level.getLevel(k)).replace("&", "§")) , k.getWorld());
+		if (killstreak % Main.customization.getInt("XP-Required-To-LevelUP") == 0) {
+			Streak.broadcast(String.valueOf(API.NomeServer + Main.messages.getString("LevelUP").replaceAll("%player%", k.getName()).replaceAll("%level%", Integer.toString(Level.getLevel(k)))).replaceAll("&", "§"), p.getWorld());
 			for (Player p2 : Bukkit.getOnlinePlayers()) {
 				p2.playSound(p2.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.Respawn")), 4.0F, 4.0F);
 			}

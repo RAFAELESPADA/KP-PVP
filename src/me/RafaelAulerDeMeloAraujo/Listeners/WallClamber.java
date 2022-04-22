@@ -35,8 +35,10 @@ import org.bukkit.potion.PotionEffectType;
 /*    */   {
 /* 33 */     Player p = e.getPlayer();
 /* 34 */     Action a = e.getAction();
-
-/* 35 */     if ((a.equals(Action.RIGHT_CLICK_BLOCK)) && (p.getItemInHand().getType() == Material.DIAMOND_SWORD) && (Habilidade.getAbility(p).equalsIgnoreCase("Spiderman"))) {
+if (!Habilidade.getAbility(p).equalsIgnoreCase("Spiderman")) {
+	return;
+}
+/* 35 */     if ((a.equals(Action.RIGHT_CLICK_BLOCK)) && (p.getItemInHand().getType() == Material.DIAMOND_SWORD) || (p.getItemInHand().getType() == Material.STONE_SWORD)) {
 
 /* 36 */       Vector v2 = p.getLocation().getDirection().multiply(0.0D).setY(1.0D);
 /* 37 */       API.darEfeito(p, PotionEffectType.REGENERATION, 3, 1);

@@ -75,12 +75,9 @@ import me.RafaelAulerDeMeloAraujo.main.RTP;
 /* 73 */       ItemStack calca0 = new ItemStack(Material.IRON_LEGGINGS);
 /*    */       
 /* 75 */       ItemStack Bota0 = new ItemStack(Material.IRON_BOOTS);
-/* 76 */       p.getInventory().addItem(new ItemStack[] { dima });
-/* 77 */       p.getInventory().addItem(new ItemStack[] { especial });
-/* 78 */       p.getInventory().setHelmet(capacete0);
-/* 79 */       p.getInventory().setChestplate(peitoral0);
-/* 80 */       p.getInventory().setLeggings(calca0);
-/* 81 */       p.getInventory().setBoots(Bota0);
+/* 76 */      
+/* 77 */       
+/* 78 */       
 /*    */       
 /* 83 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + this.main.getConfig().getString("Message.Kit").replaceAll("%kit%", "Deshfire").replace("&", "§"));
 /* 84 */       Habilidade.setAbility(p, "Deshfire");
@@ -93,6 +90,7 @@ RTP.TeleportArenaRandom(p);
 /* 90 */         p.playSound(p.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.KitUse")), 1.0F, 1.0F);
 /* 91 */         TitleAPI.sendTitle(p, Integer.valueOf(20), Integer.valueOf(60), Integer.valueOf(20), this.main.getConfig().getString("Title.KitTitle"), this.main.getConfig().getString("Title.KitSubTitle").replaceAll("%kit%", "Deshfire"));
 /*    */       }
+p.getInventory().setItem(1, especial);
 /*    */     }
 /*    */     
 /*    */ 

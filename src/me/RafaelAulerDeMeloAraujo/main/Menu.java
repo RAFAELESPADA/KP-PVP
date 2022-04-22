@@ -1,11 +1,18 @@
 /*     */ package me.RafaelAulerDeMeloAraujo.main;
 
+import java.util.ArrayList;
 /*     */ import java.util.Arrays;
+import java.util.Collection;
 /*     */ import java.util.List;
 import me.RafaelAulerDeMeloAraujo.Coins.Coins;
 import me.RafaelAulerDeMeloAraujo.Coins.XP;
+import me.RafaelAulerDeMeloAraujo.Listeners.CombatLog;
+import me.RafaelAulerDeMeloAraujo.Listeners.StatusGUI;
+import me.RafaelAulerDeMeloAraujo.ScoreboardManager.FastBoard;
 import me.RafaelAulerDeMeloAraujo.ScoreboardManager.Level;
+import me.RafaelAulerDeMeloAraujo.ScoreboardManager.ScoreboardBuilder;
 /*     */ import me.RafaelAulerDeMeloAraujo.ScoreboardManager.Streak;
+import me.RafaelAulerDeMeloAraujo.ScoreboardManager.WaveAnimation;
 import me.RafaelAulerDeMeloAraujo.SpecialAbility.API;
 /*     */ import me.RafaelAulerDeMeloAraujo.SpecialAbility.Cooldown;
 /*     */ import me.RafaelAulerDeMeloAraujo.SpecialAbility.Deshfire;
@@ -18,7 +25,8 @@ import net.md_5.bungee.api.ChatColor;
 /*     */ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 /*     */ import org.bukkit.Location;
-/*     */ import org.bukkit.Material; 
+/*     */ import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 /*     */ import org.bukkit.Sound;
 /*     */ import org.bukkit.World;
 /*     */ import org.bukkit.command.Command;
@@ -46,23 +54,37 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 
 /*     */ public class Menu
-/*     */   implements Listener, CommandExecutor
+/*     */   implements Listener , CommandExecutor
 /*     */ {
 /*     */   private Main main;
-/*     */  
+private static WaveAnimation waveAnimation;
+private static String text = "";
+/*     */  public static ArrayList<String> has = new ArrayList();
 /*     */   
 /*     */   public Menu(Main main)
 /*     */   {
 /*  62 */     this.main = main;
 /*     */   }
-/*     */   
+/*     */   @EventHandler(priority = EventPriority.HIGHEST)
+/*     */   public void addtoTop(PlayerJoinEvent e) {
+	Player p = e.getPlayer();
+	
+		
+	if (has.contains(p.getName())) {
+		Bukkit.getConsoleSender().sendMessage("[KP-PVP] " + p.getName() + " is already on the Top. Ignoring them. [1]");
+		return;
+		
+	 }
+			/*     */ Join.player.add(p);
+			has.add(p.getName());
+			Bukkit.getConsoleSender().sendMessage("[KP-PVP] Adding " + p.getName() + " to Top Kills List.");
+			Bukkit.getConsoleSender().sendMessage("[KP-PVP] Players in top: " + Join.player.toString());
+	 
+}
 /*     */   @EventHandler
 /*     */   public void onJoin(PlayerJoinEvent e) {
 /*  67 */     Player p = e.getPlayer();
-/*     */     if (!Join.player.contains(p)) {
-/*     */ Join.player.add(p);
-Bukkit.getConsoleSender().sendMessage("[KP-PVP] Adding " + p.getName() + " to Top Kills List.");
-}
+/*     */     
 /*  70 */     Habilidade.removeAbility(p);
 /*  71 */     Deshfire.Armadura.remove(p);
 /*  72 */     Deshfire.Armadura2.remove(p);
@@ -101,6 +123,19 @@ if (!Main.plugin.getConfig().getBoolean("bungeemode")) {
 if (!Join.game.contains(p.getName())) {
 /*  74 */     Join.game.add(p.getName());
 }
+new BukkitRunnable() {	
+	@Override
+		public void run() {
+/*     */           if (!Join.game.contains(p)) {
+	return;
+}
+/*     */ 	/*     */       API.init();
+
+		}}.runTaskTimer(Main.getInstance(), 10 * 20L, 20L * Main.getInstance().getConfig().getInt("ScoreBoard-Interval-Update"));
+
+
+
+
 	/*     */ 
 	/* 200 */           World w = Bukkit.getServer().getWorld(Main.plugin.getConfig().getString("Spawn.World"));
 	/* 201 */           double x = Main.plugin.getConfig().getDouble("Spawn.X");
@@ -120,7 +155,7 @@ if (!Join.game.contains(p.getName())) {
 	/*     */ 
 	/* 219 */           p.getInventory().clear();
 	/* 220 */           p.getInventory().setArmorContents(null);
-	/*  94 */       p.getInventory().addItem(new ItemStack[] { new ItemStack(make(Material.BOOK, 1, 0, Main.messages.getString("KitItemName").replace("&", "§"), Arrays.asList(new String[] { this.main.getConfig().getString("JoinItem.Lore").replace("&", "§") }))) });
+	/*  94 */       p.getInventory().addItem(new ItemStack[] { new ItemStack(make(Material.BOOK, 1, 0, Main.messages.getString("KitItemName").replace("&", "§"), Arrays.asList(new String[] { Main.getInstance().getConfig().getString("JoinItem.Lore").replace("&", "§") }))) });
 	/*  95 */       ItemStack kits = new ItemStack(Material.EMERALD);
 	/*  96 */       ItemMeta kits2 = kits.getItemMeta();
 	/*  97 */       kits2.setDisplayName(Main.messages.getString("ShopItemName").replace("&", "§"));
@@ -138,6 +173,11 @@ if (!Join.game.contains(p.getName())) {
 	/* 227 */           ItemMeta stats12 = stats1.getItemMeta();
 	/* 228 */           stats12.setDisplayName(Main.messages.getString("ClickTestItemName").replace("&", "§"));
 	/* 229 */           stats1.setItemMeta(stats12);
+	ItemStack warp = new ItemStack(Material.PAPER);
+	/* 227 */           ItemMeta warp2 = warp.getItemMeta();
+	/* 228 */           warp2.setDisplayName("§aWarps");
+	/* 229 */           warp.setItemMeta(warp2);
+	p.getInventory().setItem(8, warp);
 
 	/* 103 */     
 
@@ -155,10 +195,18 @@ if (!Join.game.contains(p.getName())) {
 	/* 236 */           p.setExhaustion(20.0F);
 	/* 237 */           p.setFireTicks(0);
 	/* 238 */           p.setFoodLevel(20000);
-	/* 239 */           TitleAPI.sendTitle(p, Integer.valueOf(40), Integer.valueOf(80), Integer.valueOf(40), this.main.getConfig().getString("Title.JoinTitle"), this.main.getConfig().getString("Title.JoinSubTitle"));
+	/* 239 */           TitleAPI.sendTitle(p, Integer.valueOf(40), Integer.valueOf(80), Integer.valueOf(40), Main.getInstance().getConfig().getString("Title.JoinTitle"), Main.getInstance().getConfig().getString("Title.JoinSubTitle"));
 	API.tirarEfeitos(p);
 }
 /*     */   
+@EventHandler
+/*     */   public void onLeave2(PlayerQuitEvent e)
+/*     */   {
+/* 117 */     Player p = e.getPlayer();
+if (X1.inx1.contains(p)) {
+	X1.sair1v1(p);
+}
+}
 /*     */   @EventHandler
 /*     */   public void onLeave(PlayerQuitEvent e)
 /*     */   {
@@ -182,6 +230,7 @@ if (!Join.game.contains(p.getName())) {
 /*     */   @EventHandler
 /*     */   public void onLeave(PlayerKickEvent e)
 /*     */   {
+	
 /* 128 */     Player p = e.getPlayer();
 /*     */     if (Join.game.contains(p.getName()) && !Main.plugin.getConfig().getBoolean("bungeemode")) {
 /*     */ 
@@ -305,10 +354,32 @@ if (!Join.game.contains(p.getName())) {
 /* 403 */       
 /* 404 */       if (Join.game.contains(p.getName()))
 /*     */       {
-	 p.sendMessage("§eTeleporting in 5 seconds");
+	if (CombatLog.emCombate(p)) {
+		p.sendMessage("§cYou are in combat!");
+		return;
+	}
+	 p.sendMessage("§eTeleporting");
 	 e.setCancelled(true);
 	 p.getInventory().clear();
 	 p.setHealth(1.0);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
+	 X1.inx1.remove(p);
 	 API.darEfeito(p, PotionEffectType.SLOW, 99, 6);
 	Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable()
 			{
@@ -361,6 +432,11 @@ if (!Join.game.contains(p.getName())) {
 	/* 103 */       p.getInventory().addItem(new ItemStack[] { kits });
 	/* 104 */       p.getInventory().addItem(new ItemStack[] { st });
 	p.getInventory().setItem(4, stats1);
+	ItemStack warp = new ItemStack(Material.PAPER);
+	/* 227 */           ItemMeta warp2 = warp.getItemMeta();
+	/* 228 */           warp2.setDisplayName("§aWarps");
+	/* 229 */           warp.setItemMeta(warp2);
+	p.getInventory().setItem(8, warp);
 	/*     */       p.setAllowFlight(false);
 	/*     */ p.setHealth(20);
 	/* 107 */    
@@ -374,7 +450,7 @@ if (!Join.game.contains(p.getName())) {
 /*     */ 
 /*     */ 
 /* 159 */         ((Player)p).playSound(((Player)p).getLocation(), Sound.valueOf(Main.getInstace().getConfig().getString("Sound.SucefullMessage")), 2.0F, 2.0F);
-/* 160 */           	         } }, 100L);
+/* 160 */           	         } }, 10L);
 	}
 }
 
@@ -392,7 +468,7 @@ public void onBauKit(PlayerInteractEvent e)
     if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK))
     {
       p.openInventory(Shop.shop);
-      p.playSound(p.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.ShopMenu")), 12.0F, 1.0F);
+      p.playSound(p.getLocation(), Sound.valueOf(Main.getInstance().getConfig().getString("Sound.ShopMenu")), 12.0F, 1.0F);
     }
   }
 }
@@ -406,7 +482,7 @@ public void onKit(PlayerInteractEvent e)
     if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK))
     {
       Bukkit.dispatchCommand(p, "kpkitmenu");
-      p.playSound(p.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.ShopMenu")), 12.0F, 1.0F);
+      p.playSound(p.getLocation(), Sound.valueOf(Main.getInstace().getConfig().getString("Sound.ShopMenu")), 12.0F, 1.0F);
     }
   }
 }
@@ -433,19 +509,20 @@ public void onStats(PlayerInteractEvent e)
     e.setCancelled(true);
     if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK))
     {
-      p.sendMessage("§b");
-      int kills = Main.plugin.getConfig().getInt("status." + p.getName().toLowerCase() + ".kills");
-      int deaths = Main.plugin.getConfig().getInt("status." + p.getName().toLowerCase() + ".deaths");
-      p.sendMessage(Main.messages.getString("Status").replace("&", "§").replace("%player%", p.getName()));
-      p.sendMessage("");
-      p.sendMessage(Main.messages.getString("StatusKills").replace("&", "§") + kills);
-      p.sendMessage(Main.messages.getString("StatusDeaths").replace("&", "§") + deaths);      
-      p.sendMessage(Main.messages.getString("StatusCoins").replace("&", "§") + Coins.getCoins(p.getName()));
-      p.sendMessage(Main.messages.getString("StatusKS").replace("&", "§") + Streak.killstreak.get(p.getName()));
-      p.sendMessage(Main.messages.getString("StatusXP").replace("&", "§") + XP.getXP(p.getName()));
-      p.sendMessage(Main.messages.getString("StatusLevel").replace("&", "§") + Level.getLevel(p));
-      p.sendMessage("§b");
-      p.playSound(p.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.ShopMenu")), 12.0F, 1.0F);
+      StatusGUI.openGUI(p, p);
+    }
+  }
+}
+@EventHandler
+public void onStats2(PlayerInteractEvent e)
+{
+  Player p = e.getPlayer();
+  if ((p.getItemInHand().getType().equals(Material.PAPER)) && (p.getItemInHand().getItemMeta().hasDisplayName()) && !Habilidade.ContainsAbility(p) && Join.game.contains(p.getName()))
+  {
+    e.setCancelled(true);
+    if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK))
+    {
+      WarpMenu.openwarp(p);
     }
   }
 }
@@ -463,13 +540,15 @@ public void v1(PlayerInteractEvent e)
     		return;
     	}
       X1.entrar1v1(p);
-      p.playSound(p.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.ShopMenu")), 12.0F, 1.0F);
+      p.playSound(p.getLocation(), Sound.valueOf(Main.getInstance().getConfig().getString("Sound.ShopMenu")), 12.0F, 1.0F);
     }
   }
 } 
-/*     */   public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] arg3)
-/*     */   {
-/* 452 */     return false;
-/*     */   }
-/*     */ }
+/*     */
+@Override
+public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] arg3) {
+	// TODO Auto-generated method stub
+	return false;
+}
+}
 

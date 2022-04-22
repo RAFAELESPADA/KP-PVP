@@ -58,14 +58,14 @@ import me.RafaelAulerDeMeloAraujo.main.RTP;
 /*  54 */         e.setCancelled(true);
 /*  55 */         p.updateInventory();
 /*     */         
-/*  57 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§") + ChatColor.RED + Main.messages.getString("NarutoUse").replace("&", "§")));
+/*  57 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "Â§") + ChatColor.RED + Main.messages.getString("NarutoUse").replace("&", "Â§")));
 API.darEfeito(p, PotionEffectType.REGENERATION, Main.kits.getInt("NarutoRegenTime"), Main.kits.getInt("NarutoRegenAmplifier"));
 API.darEfeito(p, PotionEffectType.SPEED, Main.kits.getInt("NarutoSpeedTime"), Main.kits.getInt("NarutoSpeedAmplifier"));
 /*  61 */         p.playSound(p.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.NarutoAbility")), 1.0F, 1.0F);
 /*  62 */         cooldown.put(p.getName(), Long.valueOf(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(Main.kits.getLong("NarutoCooldown"))));
 /*  63 */         return;
 /*     */       }
-/*  65 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§") + ChatColor.RED + " You need to wait " + TimeUnit.MILLISECONDS.toSeconds(((Long)cooldown.get(p.getName())).longValue() - System.currentTimeMillis()) + " seconds to use your ability again."));
+/*  65 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "Â§") + ChatColor.RED + " You need to wait " + TimeUnit.MILLISECONDS.toSeconds(((Long)cooldown.get(p.getName())).longValue() - System.currentTimeMillis()) + " seconds to use your ability again."));
 /*     */     }
 /*     */   }
 /*     */   
@@ -80,18 +80,18 @@ API.darEfeito(p, PotionEffectType.SPEED, Main.kits.getInt("NarutoSpeedTime"), Ma
 /*     */     {
 /*  78 */       if (!Join.game.contains(p.getName()))
 /*     */       {
-/*  80 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + " §eYou are not in kitpvp to do choose this kit!");
+/*  80 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "Â§")) + " Â§eYou are not in kitpvp to do choose this kit!");
 /*  81 */         return true;
 /*     */       }
 
 /*     */    
 /*  83 */       if (Habilidade.ContainsAbility(p)) {
-/*  84 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + this.main.getConfig().getString("Message.KitUse").replace("&", "§"));
+/*  84 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "Â§")) + this.main.getConfig().getString("Message.KitUse").replace("&", "Â§"));
 /*  85 */         p.playSound(p.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.KitUse")), 1.0F, 1.0F);
 /*  86 */         return true;
 /*     */       }
 /*  88 */       if (!p.hasPermission("kitpvp.kit.naruto")) {
-/*  89 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + this.main.getConfig().getString("Permission").replace("&", "§").replaceAll("%permisson%", cmd));
+/*  89 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "Â§")) + this.main.getConfig().getString("Permission").replace("&", "Â§").replaceAll("%permisson%", cmd));
 /*  90 */         return true;
 /*     */       }
 /*     */       
@@ -100,34 +100,22 @@ API.darEfeito(p, PotionEffectType.SPEED, Main.kits.getInt("NarutoSpeedTime"), Ma
 /*  95 */       p.getInventory().clear();
 /*     */       
 /*     */ 
-/*  98 */       ItemStack dima = new ItemStack(Material.DIAMOND_SWORD);
-/*  99 */       ItemMeta souperaa = dima.getItemMeta();
-/* 100 */       souperaa.setDisplayName("§cSword");
-/* 101 */       dima.setItemMeta(souperaa);
+/*  98 */ 
 /* 102 */       ItemStack sopa = new ItemStack(Material.MUSHROOM_SOUP);
 /* 103 */       ItemMeta sopas = sopa.getItemMeta();
-/* 104 */       sopas.setDisplayName("§6Soup");
+/* 104 */       sopas.setDisplayName("Â§6Soup");
 /* 105 */       sopa.setItemMeta(sopas);
 /* 106 */       ItemStack especial = new ItemStack(Material.NETHER_STAR);
 /* 107 */       ItemMeta especial2 = especial.getItemMeta();
-/* 108 */       especial2.setDisplayName("§cNine Tails Mode!");
+/* 108 */       especial2.setDisplayName("Â§cNine Tails Mode!");
 /* 109 */       especial.setItemMeta(especial2);
 /*     */       
-/* 111 */       ItemStack capacete0 = new ItemStack(Material.IRON_HELMET);
+/* 111 */       
+/* 118 */      
+/* 119 */       
+/* 120 */     
 /*     */       
-/* 113 */       ItemStack peitoral0 = new ItemStack(Material.IRON_CHESTPLATE);
-/*     */       
-/* 115 */       ItemStack calca0 = new ItemStack(Material.IRON_LEGGINGS);
-/*     */       
-/* 117 */       ItemStack Bota0 = new ItemStack(Material.IRON_BOOTS);
-/* 118 */       p.getInventory().addItem(new ItemStack[] { dima });
-/* 119 */       p.getInventory().addItem(new ItemStack[] { especial });
-/* 120 */       p.getInventory().setHelmet(capacete0);
-/* 121 */       p.getInventory().setChestplate(peitoral0);
-/* 122 */       p.getInventory().setLeggings(calca0);
-/* 123 */       p.getInventory().setBoots(Bota0);
-/*     */       
-/* 125 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + this.main.getConfig().getString("Message.Kit").replaceAll("%kit%", "Naruto").replace("&", "§"));
+/* 125 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "Â§")) + this.main.getConfig().getString("Message.Kit").replaceAll("%kit%", "Naruto").replace("&", "Â§"));
 /* 126 */       Habilidade.setAbility(p, "Naruto");
 /*     */       API.give(p);
 /*     */ RTP.TeleportArenaRandom(p);
@@ -135,6 +123,7 @@ API.darEfeito(p, PotionEffectType.SPEED, Main.kits.getInt("NarutoSpeedTime"), Ma
 /* 130 */       for (int i = 0; i <= 34; i++) {
 /* 131 */         p.getInventory().addItem(new ItemStack[] { sopa });
 /*     */       }
+p.getInventory().setItem(1, especial);
 /*     */     }
 /*     */     
 /* 135 */     TitleAPI.sendTitle(p, Integer.valueOf(20), Integer.valueOf(60), Integer.valueOf(20), this.main.getConfig().getString("Title.KitTitle"), this.main.getConfig().getString("Title.KitSubTitle").replaceAll("%kit%", "Naruto"));

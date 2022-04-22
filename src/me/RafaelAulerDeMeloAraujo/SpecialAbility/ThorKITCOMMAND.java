@@ -65,23 +65,12 @@ import org.bukkit.ChatColor;
 /* 62 */       especial2.setDisplayName("§cThor Axe!");
 /* 63 */       especial.setItemMeta(especial2);
 /*    */       
-/* 65 */       ItemStack capacete0 = new ItemStack(Material.IRON_HELMET);
-/*    */       
-/* 67 */       ItemStack peitoral0 = new ItemStack(Material.IRON_CHESTPLATE);
-/*    */       
-/* 69 */       ItemStack calca0 = new ItemStack(Material.IRON_LEGGINGS);
-/*    */       
-/* 71 */       ItemStack Bota0 = new ItemStack(Material.IRON_BOOTS);
-/*    */       
-/* 73 */       p.getInventory().setHelmet(capacete0);
-/* 74 */       p.getInventory().setChestplate(peitoral0);
-/* 75 */       p.getInventory().setLeggings(calca0);
-/* 76 */       p.getInventory().setBoots(Bota0);
+/* 65 */       
 /*    */       
 /* 78 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + this.main.getConfig().getString("Message.Kit").replaceAll("%kit%", "Thor").replace("&", "§"));
 /* 79 */       Habilidade.setAbility(p, "Thor");
-/* 80 */       p.getInventory().addItem(new ItemStack[] { dima });
-/* 81 */       p.getInventory().addItem(new ItemStack[] { especial });
+/* 80 */       
+/* 81 */       
 /*    */       
 /*    */ 
 /*    */ API.give(p);
@@ -91,6 +80,7 @@ RTP.TeleportArenaRandom(p);
 /* 87 */         p.playSound(p.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.KitUse")), 1.0F, 1.0F);
 /* 88 */         me.RafaelAulerDeMeloAraujo.TitleAPI.TitleAPI.sendTitle(p, Integer.valueOf(20), Integer.valueOf(60), Integer.valueOf(20), this.main.getConfig().getString("Title.KitTitle"), this.main.getConfig().getString("Title.KitSubTitle").replaceAll("%kit%", "Thor"));
 /*    */       }
+p.getInventory().setItem(1, especial);
 /*    */     }
 /*    */     
 /* 92 */     return false;

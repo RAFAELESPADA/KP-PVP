@@ -31,6 +31,7 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 /*     */ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 /*     */ import org.bukkit.event.player.PlayerInteractEntityEvent;
 /*     */ import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 /*     */ import org.bukkit.event.player.PlayerJoinEvent;
 /*     */ import org.bukkit.event.player.PlayerKickEvent;
 /*     */ import org.bukkit.event.player.PlayerQuitEvent;
@@ -64,6 +65,24 @@ private BukkitTask runTaskLater;
 /*     */   public static void sair1v1(Player p) {
 /*  53 */     p.getInventory().clear();
 /*  54 */     inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
+inx1.remove(p);
 /*  56 */     org.bukkit.World w = Bukkit.getServer().getWorld(Main.plugin.getConfig().getString("Spawn.World"));
 /*  57 */     double x = Main.plugin.getConfig().getDouble("Spawn.X");
 /*  58 */     double y = Main.plugin.getConfig().getDouble("Spawn.Y");
@@ -96,6 +115,11 @@ ItemStack stats1 = new ItemStack(Material.WOOD_SWORD);
 /* 227 */           ItemMeta stats12 = kits.getItemMeta();
 /* 228 */           stats12.setDisplayName(Main.messages.getString("ClickTestItemName").replace("&", "§"));
 /* 229 */           stats1.setItemMeta(stats12);
+ItemStack warp = new ItemStack(Material.PAPER);
+/* 227 */           ItemMeta warp2 = warp.getItemMeta();
+/* 228 */           warp2.setDisplayName("§aWarps");
+/* 229 */           warp.setItemMeta(warp2);
+p.getInventory().setItem(8, warp);
 p.getInventory().setItem(4, stats1);
 p.getInventory().setItem(3, stats);
 p.getInventory().setItem(0 , shop);
@@ -239,6 +263,17 @@ p2.playSound(p2.getLocation(), Sound.valueOf(Main.getInstance().getConfig().getS
 /* 194 */       p.hidePlayer(e.getPlayer());
 /*     */     }
 /*     */   }
+//nao comer maça sumo
+@EventHandler
+/*     */   public void comer(PlayerItemConsumeEvent e)
+/*     */   {
+	ItemStack apple = new ItemStack(Material.APPLE);
+/* 193 */    if (e.getItem() == apple && Sumo.insumo.contains(e.getPlayer()) && Join.game.contains(e.getPlayer().getName())) {
+	e.setCancelled(true);
+}
+/*     */   }
+
+////////
 /*     */   
 /*     */   @EventHandler
 /*     */   public void cmd(PlayerCommandPreprocessEvent e) {
@@ -260,10 +295,12 @@ p2.playSound(p2.getLocation(), Sound.valueOf(Main.getInstance().getConfig().getS
 /* 215 */       for (Player pp : Bukkit.getOnlinePlayers()) {
 /* 216 */         matou.showPlayer(pp);
 /* 217 */         perdedor.showPlayer(pp);
+lutadores.remove(e.getPlayer().getName());
 /*     */       }
 /* 219 */       entrar1v1(matou);
 /*     */     }
 /*     */   }
+
 /*     */   
 /*     */   @EventHandler
 /*     */   public void kick(PlayerKickEvent e) {
@@ -276,6 +313,7 @@ p2.playSound(p2.getLocation(), Sound.valueOf(Main.getInstance().getConfig().getS
 /* 231 */       for (Player pp : Bukkit.getOnlinePlayers()) {
 /* 232 */         matou.showPlayer(pp);
 /* 233 */         perdedor.showPlayer(pp);
+lutadores.remove(e.getPlayer().getName());
 /*     */       }
 /* 235 */       entrar1v1(matou);
 /*     */     }
@@ -285,8 +323,12 @@ p2.playSound(p2.getLocation(), Sound.valueOf(Main.getInstance().getConfig().getS
 /*     */   public void morrer(final PlayerDeathEvent e) {
 /* 241 */     Player p = e.getEntity().getPlayer();
 /* 242 */     Player k = p.getKiller();
-/* 243 */     if (!Habilidade.getAbility(p).equalsIgnoreCase(Main.cfg_x1.getString("x1.ability")))
+if (p == null || k == null) {
+	return;
+}
+/* 243 */     if (!Habilidade.getAbility(p).equalsIgnoreCase("1v1Fight") && !Habilidade.getAbility(k).equalsIgnoreCase("1v1Fight")) {
 /* 244 */       return;
+}
 /* 245 */     if ((e.getEntity() instanceof Player)) {
 /* 246 */       
 /* 247 */       p.setFireTicks(0);
@@ -299,8 +341,7 @@ p2.playSound(p2.getLocation(), Sound.valueOf(Main.getInstance().getConfig().getS
 /* 254 */       for (PotionEffect effect : p.getActivePotionEffects())
 /* 255 */         p.removePotionEffect(effect.getType());
 /*     */     }
-/* 257 */     if (lutadores.containsKey(e.getEntity().getPlayer().getName()))
-/*     */     {
+/* 257 */     
 /*     */ 
 /*     */ 
 /*     */ 
@@ -347,7 +388,7 @@ Bukkit.getConsoleSender().sendMessage("§b" + morreu.getName() + " has been kill
 /*     */         }
 /* 280 */       }.runTaskLater(Main.plugin, 5L);
 /*     */     }
-/*     */   }
+/*     */   
 /*     */   
 /*     */   @EventHandler
 /*     */   public void InteractItem(PlayerInteractEntityEvent e)

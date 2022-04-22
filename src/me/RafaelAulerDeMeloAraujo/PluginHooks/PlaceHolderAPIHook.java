@@ -12,7 +12,6 @@ import me.RafaelAulerDeMeloAraujo.main.AntiDeathDrop;
 import me.RafaelAulerDeMeloAraujo.main.Main;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
-
 /**
  * This class will be registered through the register-method in the 
  * plugins onEnable-method.
@@ -138,16 +137,20 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
         return Double.toString(coins);
       }
     if (indentifier.equals("player_xp")) {
-    	Double xp = XP.getXP(p.getName());
+        Double xp = XP.getXP(p.getName());
         return Double.toString(xp);
       }
     if (indentifier.equals("player_level")) {
-        String level = Level.getLevel(p);
-        return level;
+        Integer level = Level.getLevel(p);
+        return String.valueOf(level);
+      }
+    if (indentifier.equals("player_xp_to_levelup")) {
+        Integer level = Level.getXPToLevelUp(p);
+        return String.valueOf(level);
       }
     if (indentifier.equals("player_is_on_kitpvp")) {
-      return String.valueOf(this.plugin.IsOnKitPvP(p.getName()) ? "Yes" : "No");
-    }
+        return String.valueOf(this.plugin.IsOnKitPvP(p.getName()));
+      }
     if (indentifier.equals("player_kit")) {
       return Habilidade.getAbility(p);
     }

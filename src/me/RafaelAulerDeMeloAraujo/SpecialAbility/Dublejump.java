@@ -167,22 +167,10 @@ if (Main.kits.getBoolean("DoubleJumpDisabled")) {
 /* 159 */       sopa.setItemMeta(sopas);
 /*     */       
 /*     */ 
-/* 162 */       ItemStack capacete0 = new ItemStack(Material.IRON_HELMET);
-/*     */       
-/* 164 */       ItemStack peitoral0 = new ItemStack(Material.IRON_CHESTPLATE);
-/*     */       
-/* 166 */       ItemStack calca0 = new ItemStack(Material.IRON_LEGGINGS);
-/*     */       
-/* 168 */       ItemStack Bota0 = new ItemStack(Material.IRON_BOOTS);
-/*     */       
-/* 170 */       p.getInventory().setHelmet(capacete0);
-/* 171 */       p.getInventory().setChestplate(peitoral0);
-/* 172 */       p.getInventory().setLeggings(calca0);
-/* 173 */       p.getInventory().setBoots(Bota0);
 /* 174 */       Habilidade.setAbility(p, "DoubleJump");
 /* 175 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + this.main.getConfig().getString("Message.Kit").replaceAll("%kit%", "DoubleJump").replace("&", "§"));
 /*     */       
-/* 177 */       p.getInventory().addItem(new ItemStack[] { dima });
+/* 177 */      
 /* 178 */       TitleAPI.sendTitle(p, Integer.valueOf(20), Integer.valueOf(60), Integer.valueOf(20), this.main.getConfig().getString("Title.KitTitle"), this.main.getConfig().getString("Title.KitSubTitle").replaceAll("%kit%", "DoubleJump"));
 /*     */       API.give(p);
 /*     */ RTP.TeleportArenaRandom(p);

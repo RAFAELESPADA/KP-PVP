@@ -66,48 +66,36 @@ import me.RafaelAulerDeMeloAraujo.main.RTP;
 /*  60 */     Player p = (Player)sender;
 /*  61 */     ItemStack dima = new ItemStack(Material.DIAMOND_SWORD);
 /*  62 */     ItemMeta souperaa = dima.getItemMeta();
-/*  63 */     souperaa.setDisplayName("§cSword");
+/*  63 */     souperaa.setDisplayName("Â§cSword");
 /*  64 */     dima.setItemMeta(souperaa);
 /*  65 */     ItemStack sopa = new ItemStack(Material.MUSHROOM_SOUP);
 /*  66 */     ItemMeta sopas = sopa.getItemMeta();
-/*  67 */     sopas.setDisplayName("§6Soup");
+/*  67 */     sopas.setDisplayName("Â§6Soup");
 /*  68 */     sopa.setItemMeta(sopas);
 /*     */     
 /*     */ 
 /*     */ 
 /*  72 */     if (cmd.equalsIgnoreCase("snail")) {
 /*  73 */       if (Habilidade.ContainsAbility(p)) {
-/*  74 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + this.main.getConfig().getString("Message.KitUse").replace("&", "§"));
+/*  74 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "Â§")) + this.main.getConfig().getString("Message.KitUse").replace("&", "Â§"));
 /*  75 */         p.playSound(p.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.KitUse")), 1.0F, 1.0F);
 /*  76 */         return true;
 /*     */       }
 /*  78 */       if (!Join.game.contains(p.getName()))
 /*     */       {
-/*  80 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + " §eYou are not in kitpvp to do choose this kit!");
+/*  80 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "Â§")) + " Â§eYou are not in kitpvp to do choose this kit!");
 /*  81 */         return true;
 /*     */       }
 /*  83 */       if (!p.hasPermission("kitpvp.kit.snail")) {
-/*  84 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + this.main.getConfig().getString("Permission").replace("&", "§").replaceAll("%permisson%", cmd));
+/*  84 */         p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "Â§")) + this.main.getConfig().getString("Permission").replace("&", "Â§").replaceAll("%permisson%", cmd));
 /*  85 */         return true;
 /*     */       }
 /*     */       
-/*  88 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + this.main.getConfig().getString("Message.Kit").replaceAll("%kit%", "Snail").replace("&", "§"));
+/*  88 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "Â§")) + this.main.getConfig().getString("Message.Kit").replaceAll("%kit%", "Snail").replace("&", "Â§"));
 /*  89 */       p.setGameMode(GameMode.ADVENTURE);
 /*  90 */       p.getInventory().clear();
 /*  91 */       Habilidade.setAbility(p, "Snail");
-/*  92 */       ItemStack capacete0 = new ItemStack(Material.LEATHER_HELMET);
-/*     */       
-/*  94 */       ItemStack peitoral0 = new ItemStack(Material.IRON_CHESTPLATE);
-/*     */       
-/*  96 */       ItemStack calca0 = new ItemStack(Material.IRON_LEGGINGS);
-/*     */       
-/*  98 */       ItemStack Bota0 = new ItemStack(Material.IRON_BOOTS);
-/*     */       
-/* 100 */       p.getInventory().setHelmet(capacete0);
-/* 101 */       p.getInventory().setChestplate(peitoral0);
-/* 102 */       p.getInventory().setLeggings(calca0);
-/* 103 */       p.getInventory().setBoots(Bota0);
-/* 104 */       p.getInventory().addItem(new ItemStack[] { dima });
+/*  92 */       
 /*     */       API.give(p);
 RTP.TeleportArenaRandom(p);
 /* 106 */       for (int i = 0; i <= 34; i++) {

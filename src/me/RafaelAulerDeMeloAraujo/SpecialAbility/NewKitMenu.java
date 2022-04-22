@@ -98,11 +98,6 @@
 /*  93 */           Bukkit.dispatchCommand(p, "critical");
 /*  94 */           p.closeInventory();
 /*     */         }
-/*  96 */         if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§7Kit §e§lMonk"))
-/*     */         {
-/*  98 */           Bukkit.dispatchCommand(p, "monk");
-/*  99 */           p.closeInventory();
-/*     */         }
 /* 101 */         if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§7Kit §e§lSnail"))
 /*     */         {
 /* 103 */           Bukkit.dispatchCommand(p, "snail");

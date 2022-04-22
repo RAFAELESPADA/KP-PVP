@@ -1,4 +1,6 @@
 /*    */ package me.RafaelAulerDeMeloAraujo.main;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 /*    */ 
 /*    */ import org.bukkit.entity.Player;
 /*    */ import org.bukkit.event.EventHandler;
@@ -21,10 +23,13 @@ import me.RafaelAulerDeMeloAraujo.SpecialAbility.Join;
         return;
     }
 	Player p = (Player) e.getEntity();
-	if ((Join.game.contains(p.getName()) && (Main.getInstace().getConfig().getString("DisableHungerOnKitPvP").equalsIgnoreCase("true")))) { 
+	if (!(Join.game.contains(p.getName()) || !Main.getInstace().getConfig().getString("DisableHungerOnKitPvP").equalsIgnoreCase("true"))) {
+		return;
+	}
+	else if (!e.isCancelled()) {
       e.setCancelled(true);
-}
-
+      
+	}
 }
 }
 

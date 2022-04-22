@@ -61,7 +61,7 @@ import org.bukkit.World;
 */  
 
 /*     */ 
-/*     */   public void addtokillstreak(Player killer)
+/*     */   public static void addtokillstreak(Player killer)
 /*     */   {
 /*  61 */     String name = killer.getName();
 /*  62 */     if (killstreak.containsKey(name) && Join.game.contains(name))

@@ -73,32 +73,22 @@ if (Main.kits.getBoolean("GladiatorDisabled")) {
 /* 66 */       especial.setItemMeta(especial2);
 /*    */       
 /*    */ 
-/* 69 */       ItemStack capacete0 = new ItemStack(Material.IRON_HELMET);
-/*    */       
-/* 71 */       ItemStack peitoral0 = new ItemStack(Material.IRON_CHESTPLATE);
-/*    */       
-/* 73 */       ItemStack calca0 = new ItemStack(Material.IRON_LEGGINGS);
-/*    */       
-/* 75 */       ItemStack Bota0 = new ItemStack(Material.IRON_BOOTS);
-/*    */       
-/* 77 */       p.getInventory().setHelmet(capacete0);
-/* 78 */       p.getInventory().setChestplate(peitoral0);
-/* 79 */       p.getInventory().setLeggings(calca0);
-/* 80 */       p.getInventory().setBoots(Bota0);
+/* 69 */       
 /*    */       
 /* 82 */       p.sendMessage(String.valueOf(this.main.getConfig().getString("Prefix").replace("&", "§")) + this.main.getConfig().getString("Message.Kit").replaceAll("%kit%", "Gladiator").replace("&", "§"));
 /*    */       
-/* 84 */       p.getInventory().addItem(new ItemStack[] { dima });
-/* 85 */       p.getInventory().addItem(new ItemStack[] { especial });
-/*    */       
+/* 84 */     
+/* 85 */      
+/*    */       Habilidade.setAbility(p, "Gladiator");
 /*    */ API.give(p);
 RTP.TeleportArenaRandom(p);
-/* 88 */       Habilidade.setAbility(p, "Gladiator");
+/* 88 */       
 /* 89 */       for (int i = 0; i <= 34; i++) {
 /* 90 */         p.getInventory().addItem(new ItemStack[] { sopa });
 /* 91 */         me.RafaelAulerDeMeloAraujo.TitleAPI.TitleAPI.sendTitle(p, Integer.valueOf(20), Integer.valueOf(60), Integer.valueOf(20), this.main.getConfig().getString("Title.KitTitle"), this.main.getConfig().getString("Title.KitSubTitle").replaceAll("%kit%", "Gladiator"));
 /* 92 */         p.playSound(p.getLocation(), Sound.valueOf(this.main.getConfig().getString("Sound.KitUse")), 1.0F, 1.0F);
 /*    */       }
+p.getInventory().setItem(1, especial);
 /*    */     }
 /*    */     
 /* 96 */     return false;
